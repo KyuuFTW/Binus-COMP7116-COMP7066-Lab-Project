@@ -41,7 +41,7 @@
     )
 
 (deffunction val-int(?l ?r ?c)
-    (if (and (>= ?c ?l) (<= ?c ?r)) then
+    (if (and (numberp ?c) (and (>= ?c ?l) (<= ?c ?r)) ) then
         	(return TRUE)
         else
             (return FALSE)    
@@ -356,7 +356,7 @@
     )
 
 (deffunction menu4()
-    (printout t "Types of houses to be updated" crlf)
+    (printout t "Types of houses to be deleted" crlf)
     (printout t "================================" crlf)
     (printout t "1. House with Garage" crlf)
     (printout t "2. House without Garage" crlf)
