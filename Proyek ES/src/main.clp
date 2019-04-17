@@ -44,7 +44,7 @@
     (if (and (numberp ?c) (and (>= ?c ?l) (<= ?c ?r)) ) then
         	(return TRUE)
         else
-            (return FALSE)    
+            (return FALSE)
     	)
     )
 
@@ -399,8 +399,55 @@
     )
 
 (deffunction menu5()
-    
+    (bind ?name "")
+    (while (or (< (str-length ?name) 3) (> (str-length ?name) 20))
+        (printout t "Input your name [3 - 20 characters length]: ")
+        (bind ?name (readline))
+        )
+    (bind ?gender "")
+    (while TRUE
+        (printout t "Input your gender [ Male | Female ](CASE-SENSITIVE): ")
+        (bind ?gender (readline))
+        (if (eq ?gender "Male") then (break))
+        (if (eq ?gender "Female") then (break))
+        )
+    (bind ?preference "")
+    (while TRUE
+        (printout t "Input your house preference [ With Garage | Without Garage ](CASE-SENSITIVE): ")
+        (bind ?preference (readline))
+        (if (eq ?preference "With Garage") then (break))
+        (if (eq ?preference "Without Garage") then (break))
+        )
+    (bind ?income -1)
+    (while (neq (val-int 10000 500000 ?income) TRUE)
+        (printout t "Input your income [10000 - 500000] (dollars) : ")
+        (bind ?income (read))
+        )
+    (bind ?location "")
+    (while TRUE
+        (printout t "Input your work location [West Jakarta | North Jakarta | South Jakarta](CASE-SENSITIVE): ")
+        (bind ?location (readline))
+        (if (eq ?location "West Jakarta") then (break))
+        (if (eq ?location "North Jakarta") then (break))
+        (if (eq ?location "South Jakarta") then (break))
+        )
+    (bind ?type "")
+    (while TRUE
+        (printout t "Input your preferred house type [Cottage | Light House | Skyscraper](CASE-SENSITIVE): ")
+        (bind ?type (readline))
+        (if (eq ?type "Cottage") then (break))
+        (if (eq ?type "Light House") then (break))
+        (if (eq ?type "Skyscraper") then (break))
+        )
+    (bind ?car 0)
+    (if (eq ?preference "With Garage") then
+        (while (neq (val-int 1 5 ?car) TRUE)
+            (printout t "Input number of car you own [1 - 5](cars): ")
+            (bind ?car (read))
+            )
+        )
     )
+
 (reset)
 
 
@@ -410,10 +457,10 @@
         (menu1)
         )
     (if (eq ?cmd 2) then
-        (menu2)    
+        (menu2)
         )
     (if (eq ?cmd 3) then
-        (menu3)    
+        (menu3)
         )
     (if (eq ?cmd 4) then
         (menu4)
