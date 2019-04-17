@@ -1,3 +1,0 @@
-INDEX VERSION 1.129+C:\Users\wygn\Documents\GitHub\ExpertSystem\.metadata\.plugins\org.eclipse.jdt.core
-2005060863.index
-3308592399.index
