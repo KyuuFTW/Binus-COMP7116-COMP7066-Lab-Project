@@ -41,7 +41,7 @@
     )
 
 (deffunction val-int(?l ?r ?c)
-    (if (and (numberp ?c) (and (>= ?c ?l) (<= ?c ?r)) ) then
+    (if (and (and (>= ?c ?l) (<= ?c ?r)) (numberp ?c)  ) then
         	(return TRUE)
         else
             (return FALSE)    
