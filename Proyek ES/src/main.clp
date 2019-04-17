@@ -356,7 +356,7 @@
     )
 
 (deffunction menu4()
-    (printout t "Types of houses to be deletedfjahslkfjh" crlf)
+    (printout t "Types of houses to be deleted" crlf)
     (printout t "================================" crlf)
     (printout t "1. House with Garage" crlf)
     (printout t "2. House without Garage" crlf)
