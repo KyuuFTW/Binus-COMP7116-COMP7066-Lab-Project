@@ -24,6 +24,13 @@
     (slot con)
     )
 
+(deftemplate search-match
+    (slot type)
+    (slot income (type INTEGER))
+    (slot location)
+    (slot car (type INTEGER))
+    )
+
 (defglobal ?*counter* = 0 )
 (defglobal ?*position* = 0)
 
@@ -133,14 +140,10 @@
     =>
     (if (and (> ?garage 0) (eq ?con 1) ) then
         (bind ?*counter* (+ ?*counter* 1))
-        ;(printout t ?index " " ?*counter*)
         (print-row ?*counter* ?type ?room ?price ?location ?garage 15)
-        ;(printout t ?*counter* " " ?type " " ?room " " ?price " " ?location " " ?garage crlf)
         else (if (and (eq ?garage 0) (eq ?con 2)) then
              (bind ?*counter* (+ ?*counter* 1))
-	         ;(printout t ?index " " ?*counter*)
 	         (print-row ?*counter* ?type ?room ?price ?location ?garage 15)
-	         ;(printout t ?*counter* " " ?type " " ?room " " ?price " " ?location " " ?garage crlf)
             )
         )
     )
@@ -175,6 +178,43 @@
         )
     )
 
+(defrule find-match
+    ?index<-(rumah (type ?type) (room ?room) (price ?price) (location ?location) (garage ?garage))
+    ?index2<-(search-match (type ?type2) (income ?income) (location ?location2) (car ?car))
+    =>
+    (bind ?true 0)
+    (bind ?total 4)
+    (bind ?match-rate 100)
+    (if (and (eq ?car 0) (> ?garage 0)) then
+        (bind ?total -1)
+        )
+    (if (> ?total -1) then
+        (if (<= ?car ?garage) then
+            (bind ?true (+ ?true 1))
+            else
+            (bind ?match-rate (- ?match-rate 10))
+            )
+        (if (eq ?location ?location2) then
+            (bind ?true (+ ?true 1))
+            else
+            (bind ?match-rate (- ?match-rate 10))
+            )
+        (if (eq ?type ?type2) then
+            (bind ?true (+ ?true 1))
+            else
+            (bind ?match-rate (- ?match-rate 5))
+            )
+        (if (> ?income ?price) then
+            (bind ?true (+ ?true 1))
+            else
+            (bind ?match-rate (- ?match-rate 10))
+            )
+        (if (> ?true 2) then
+            (printout t ?index " " ?match-rate crlf)
+            )
+        )
+    )
+
 (defrule done
     ?index<-(with-garage)
     =>
@@ -189,6 +229,12 @@
 
 (defrule done3
     ?index<-(del)
+    =>
+    (bind ?*position* ?index)
+    )
+
+(defrule done4
+    ?index<-(search-match)
     =>
     (bind ?*position* ?index)
     )
@@ -446,10 +492,12 @@
             (bind ?car (read))
             )
         )
+    (assert (search-match (type ?type) (income ?income) (location ?location) (car ?car) ))
+    (run)
+    (retract ?*position*)
     )
 
 (reset)
-
 
 (while TRUE
     (bind ?cmd (menu))
