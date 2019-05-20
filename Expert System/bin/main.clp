@@ -493,7 +493,6 @@
         )
     (assert (user-info (name ?name) (gender ?gender) (income ?income) (interest ?preference ) (location ?location) (type ?type) (carCount ?car)))
     (run)
-    (facts)
     (new Template)
     (retract ?*position*)
     )
