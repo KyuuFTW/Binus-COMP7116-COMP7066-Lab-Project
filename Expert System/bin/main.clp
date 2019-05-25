@@ -181,14 +181,18 @@
     =>
     (if (and (eq ?garage 0) (eq ?con 2)) then
         (bind ?*counter* (+ ?*counter* 1))
+        (if (eq ?*counter* ?ix) then
+        	(retract ?index)
+        )
         )
     (if (and (> ?garage 0) (eq ?con 1)) then
         (bind ?*counter* (+ ?*counter* 1))
+        (if (eq ?*counter* ?ix) then
+        	(retract ?index)
         )
-    (if (eq ?*counter* ?ix) then
-        (retract ?index)
         )
     )
+    
 
 (defrule matching
     (user-info (income ?income) (location ?location2) (type ?type2) (carCount ?car) )
@@ -500,6 +504,7 @@
 (reset)
 
 (while TRUE
+    (facts)
     (bind ?cmd (menu))
     (if (eq ?cmd 1) then
         (menu1)
