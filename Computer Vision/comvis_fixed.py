@@ -102,16 +102,9 @@ def draw_prediction_results(predict_results, test_image_list, test_faces_rects, 
     return predictionDraw
 
 def combine_results(predicted_test_image_list):
-    cnt = len(predicted_test_image_list)
-    height = predicted_test_image_list[0].shape[0]
-    width = predicted_test_image_list[0].shape[1]
-
-    imgArray = np.zeros((height, width * cnt, 3), dtype=np.uint8)
-    for i in range(cnt):
-        for x in range(height):
-            for y in range(width):
-                imgArray[x][y + i*width] = predicted_test_image_list[i][x][y]
-    
+    imgArray = predicted_test_image_list[0]
+    for i in range(1, len(predicted_test_image_list)):
+        imgArray = np.hstack((imgArray, predicted_test_image_list[i]))
     return imgArray
 
 def show_result(image):
